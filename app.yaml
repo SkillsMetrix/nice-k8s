@@ -1,17 +1,19 @@
-# fluentd-ds-allnodes.yaml
+# nginx-ds-subsetnodes.yaml
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: fluentd-ds
+  name: nginx-ds
 spec:
   template:
     metadata:
       labels:
-        name: fluentd
+        name: nginx
     spec:
       containers:
-      - name: fluentd
-        image: gcr.io/google-containers/fluentd-elasticsearch:1.20
+      - name: nginx-container
+        image: nginx
+      nodeSelector:
+        disktype: ssd
   selector:
     matchLabels:
-      name: fluentd
+      name: nginx
