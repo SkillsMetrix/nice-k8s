@@ -1,27 +1,17 @@
-ReplicaSet YAML file
-
-# nginx-rs.yaml
+# fluentd-ds-allnodes.yaml
 apiVersion: apps/v1
-kind: ReplicaSet
+kind: DaemonSet
 metadata:
-  name: nginx-rs
+  name: fluentd-ds
 spec:
-  replicas: 3
   template:
     metadata:
-      name: nginx-pod
       labels:
-        app: nginx-app
-        tier: frontend
+        name: fluentd
     spec:
       containers:
-      - name: nginx-container
-        image: nginx
-        ports:
-        - containerPort: 80
+      - name: fluentd
+        image: gcr.io/google-containers/fluentd-elasticsearch:1.20
   selector:
     matchLabels:
-      app: nginx-app
-    matchExpressions:
-      - {key: tier, operator: In, values: [frontend]}
-
+      name: fluentd
