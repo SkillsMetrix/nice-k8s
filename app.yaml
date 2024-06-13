@@ -5,12 +5,16 @@ metadata:
   labels:
     app: redis
 spec:
-  replicas: 5
+  replicas: 10
   selector:
     matchLabels:
       app: redis
   strategy:
-    type: Recreate
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 0
+  minReadySeconds: 10
   template: 
     metadata:
       labels:
