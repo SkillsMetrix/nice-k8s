@@ -9,8 +9,8 @@ spec:
   selector:
     matchLabels:
       app: redis
-    strategy:
-      type: Recreate
+  strategy:
+    type: Recreate
   template: 
     metadata:
       labels:
