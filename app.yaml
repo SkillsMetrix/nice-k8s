@@ -1,40 +1,20 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Pod
 metadata:
-  name: myweb
-  labels:
-    app: myweb
-  namespace: myfirstapp
+  name: nginx-cm
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: myweb
-  template:
-    metadata:
-      labels:
-        app: myweb
-        app.kubernetes.io/name: myweb
-    spec:
-      containers:
-      - name: myweb
-        image: nginx
-        ports:
-        - containerPort: 80
-        resources:
-          requests:
-            memory: "300Mi"
-          limits:
-            memory: "1Gi"
-        livenessProbe:
-          httpGet:
-            path: /
-            port: 80
-          initialDelaySeconds: 60
-          periodSeconds: 3
-        readinessProbe:
-          httpGet:
-            path: /
-            port: 80
-          initialDelaySeconds: 60
-          periodSeconds: 10
+  containers:
+  - name: nginx-container
+    image: nginx
+    volumeMounts:
+    - name: test-vol
+      mountPath: "/etc/non-sensitive-data"
+      readOnly: true
+    volumes:
+    - name: test-vol
+      configMap:
+        name: nginx-configmap
+        - key: file-1.txt
+          path: file-a.txt
+        - key: file-2.txt
+          path: file-b.txt
