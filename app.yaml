@@ -1,20 +1,15 @@
+nginx-emptydir.yaml
 apiVersion: v1
 kind: Pod
 metadata:
-  name: redis-pod-secret-env
+  name: nginx-emptydir
 spec:
   containers:
-  - name: redis-container
-    image: redis
-    env:
-      - name: SECRET_USERNAME
-        valueFrom:
-          secretKeyRef:
-            name: redis-secret-env
-            key: username
-      - name: SECRET_PASSWORD
-        valueFrom:
-          secretKeyRef:
-            name: redis-secret-env
-            key: password
-  restartPolicy: Never
+  - name: nginx-container
+    image: nginx
+    volumeMounts:
+    - name: test-vol
+      mountPath: /test-mnt
+  volumes:
+  - name: test-vol
+    emptyDir: {}
