@@ -10,10 +10,11 @@ spec:
     - name: test-vol
       mountPath: "/etc/non-sensitive-data"
       readOnly: true
-    volumes:
+  volumes:
     - name: test-vol
       configMap:
         name: nginx-configmap
+        items:
         - key: file-1.txt
           path: file-a.txt
         - key: file-2.txt
